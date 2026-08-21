@@ -80,4 +80,14 @@ names(Whole_list)[i] <- tissue
 
 all_Whole <- Reduce(merge, Whole_list)
 
+all_Whole$tissue1 <- ifelse(str_detect(all_Whole$ID, "Colon"), "Colon",
+                           ifelse(str_detect(all_Whole$ID, "Lung"), "Lung",
+                                 ifelse(str_detect(all_Whole$ID, "MPNST"), "MPNST",
+                                       ifelse(str_detect(all_Whole$ID, "Ovary"), "Ovary",
+                                             ifelse(str_detect(all_Whole$ID, "Pancreas"), "Pancreas",
+                                                   ifelse(str_detect(all_Whole$ID, "Skin"), "Skin",
+                                                         ifelse(str_detect(all_Whole$ID, "Thyroid"), "Thyroid", "Brain")))))))
+
+all_Whole$tissue1 <- factor(all_Whole$tissue1, c("Brain", "Thyroid", "Lung", "Pancreas", "Colon", "Ovary", "MPNST", "Skin"))
+
 qsave(all_Whole, paste0(path, "all_Whole.qs"))
