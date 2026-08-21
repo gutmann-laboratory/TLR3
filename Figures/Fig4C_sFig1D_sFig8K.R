@@ -16,3 +16,12 @@ DotPlot(TAM_Clusters_sub, features = features, group.by = "celltype_new", dot.sc
  theme(axis.text.y = element_text(size = 25, face = "italic")) +
  theme(axis.text.x = element_text(size = 25, angle = 90, hjust = 1, vjust = 0.5))
 
+# sFig8K
+FMC <- subset(TAM_Clusters_sub, condition == "FMC")
+
+features = c("Ifih1", "Ddx58") 
+
+DotPlot(FMC, features = features, group.by = "condition") +
+    theme(axis.title = element_blank()) +
+    theme(axis.text.x = element_text(size = 20, angle = 45, hjust = 1)) +
+    theme(axis.text.y = element_text(size = 20))
