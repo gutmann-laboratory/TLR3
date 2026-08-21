@@ -102,15 +102,26 @@ Clusters_sub$new_label <- ifelse(Clusters_sub$tumor_tissue %in% c("Tumor_ON", "G
 
 Clusters_tumor <- subset(Clusters_sub, new_label != "Others")
 
+# sFig1A
 features = c("Tlr3")
 
-options(repr.plot.width = 5, repr.plot.height = 6)
 DotPlot(Clusters_tumor, features = features, group.by = "new_label") +
     scale_y_discrete(limits = rev(levels(Clusters_tumor$new_label))) +
     theme(axis.title = element_blank()) +
     theme(axis.text.x = element_text(size = 20, angle = 45, hjust = 1)) +
     theme(axis.text.y = element_text(size = 20))
 
+# sFig1B
 
+Clusters_brain <- subset(Clusters_tumor, subset = new_label == "Brain")
+Clusters_brain$HGG <- ifelse(Clusters_brain$tumor_tissue %in% c("GBM", "MB"), "HGG", "LGG")
+
+features = c("Tlr3")
+
+DotPlot(Clusters_brain, features = features, group.by = "HGG", dot.scale = 10, scale.min = 0) +
+    #scale_y_discrete(limits = c("")) +
+    theme(axis.title = element_blank()) +
+    theme(axis.text.x = element_text(size = 20, angle = 0, hjust = 0.5, vjust = 0.5, face = "italic")) +
+    theme(axis.text.y = element_text(size = 20))
 
 
