@@ -8,6 +8,13 @@ DotPlot(TAM_Clusters_sub, features = rev(features), group.by = "celltype_new", d
  theme(axis.text.x = element_text(size = 25, angle = 90, hjust = 1, vjust = 0.5)) +
  coord_flip()
 
+# Fig7H
+features = c("Ifih1")
+DotPlot(TAM_Clusters_sub, features = features, group.by = "celltype_new", dot.scale = 10, idents = "FMC") +
+ theme(axis.title = element_blank()) +
+ theme(axis.text.y = element_text(size = 25, face = "italic")) +
+ theme(axis.text.x = element_text(size = 25, angle = 90, hjust = 1, vjust = 0.5))
+
 
 # sFig1D
 features = c("Tlr3")
