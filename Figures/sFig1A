@@ -85,13 +85,31 @@ Clusters_sub$celltype_new <- ifelse(Clusters_sub$seurat_clusters %in% c(1), "Mic
 
 Clusters_sub <- subset(Clusters_sub, !celltype_new %in% c("DCs"))
 
-Clusters_sub$new_label <- ifelse(Clusters_sub$tissue %in% c("OPG", "GBM", "MB"), "Brain", 
-                                 ifelse(Clusters_sub$tissue %in% c("Pancreas1", "Pancreas"), "Pancreas",
+Clusters_sub$tumor_tissue <- ifelse(Clusters_sub$ID %in% c("Het_PA", "Normal_PA"), "Normal_ON",
+                                                     ifelse(Clusters_sub$ID %in% c("Tumor_Colon"), "Tumor_Colon",
+                                                           ifelse(Clusters_sub$ID %in% c("Tumor_GBM"), "GBM",
+                                                                 ifelse(Clusters_sub$ID %in% c("Tumor_PA"), "Tumor_ON",
+                                                                       ifelse(Clusters_sub$ID %in% c("Tumor_Pancreas1", "Tumor_Pancreas2", "Tumor1_Pancreas3", "Tumor2_Pancreas3"), "Tumor_Pancreas",
+                                                                             ifelse(Clusters_sub$ID %in% c("Tumor1_MB", "Tumor2_MB", "Tumor3_MB"), "MB",
+                                                                                   ifelse(Clusters_sub$ID %in% c("Tumor1_Skin", "Tumor2_Skin"), "Tumor_Skin",
+                                                                                         ifelse(Clusters_sub$ID %in% c("WT_Colon"), "Normal_Colon", "Others"))))))))
+
+
+Clusters_sub$new_label <- ifelse(Clusters_sub$tumor_tissue %in% c("Tumor_ON", "GBM", "MB"), "Brain", 
+                                 ifelse(Clusters_sub$tumor_tissue %in% c("Tumor_Pancreas"), "Pancreas",
                                        ifelse(Clusters_sub$tumor_tissue %in% c("Tumor_Colon"), "Colon",
                                              ifelse(Clusters_sub$tumor_tissue %in% c("Tumor_Skin"), "Skin", "Others"))))
-table(Clusters_sub$new_label)
 
+Clusters_tumor <- subset(Clusters_sub, new_label != "Others")
 
+features = c("Tlr3")
+
+options(repr.plot.width = 5, repr.plot.height = 6)
+DotPlot(Clusters_tumor, features = features, group.by = "new_label") +
+    scale_y_discrete(limits = rev(levels(Clusters_tumor$new_label))) +
+    theme(axis.title = element_blank()) +
+    theme(axis.text.x = element_text(size = 20, angle = 45, hjust = 1)) +
+    theme(axis.text.y = element_text(size = 20))
 
 
 
