@@ -30,4 +30,6 @@ TAM_Clusters_sub$celltype_new <- ifelse(TAM_Clusters_sub$seurat_clusters %in% c(
                                                 ifelse(TAM_Clusters_sub$seurat_clusters %in% c(7, 13), "DCs",
                                                        ifelse(TAM_Clusters_sub$seurat_clusters %in% c("1"), "Monocytes", NA)))))))))))
 
+TAM_Clusters_sub <- subset(TAM_Clusters_sub, !celltype_new %in% c("DCs"))
+
 qsave(TAM_Clusters_sub, paste0(path, "OPG_TAM_Clusters_sub.qs"))
